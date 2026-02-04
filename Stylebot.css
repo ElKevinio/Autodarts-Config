@@ -283,7 +283,7 @@ div.css-jpb1ox {
 /* Gemeinsame Basis für alle Spieler-Boxen */
 :root:not(:has(.css-rc3vw3)) .css-rtn29s,
 :root:not(:has(.css-rc3vw3)) .css-hjw8x4 {
-  background: rgba(50, 50, 50, 0.95);
+  background: var(--color-bg-dark-verylight);
   color: var(--color-text);
   padding: 1rem;
   box-sizing: border-box;
@@ -784,7 +784,7 @@ div.chakra-menu__group {
   width: 50%;
 }
 
-
+css-hjw8x4
 /* ============================================================================
    14. ALTERNATIVER MODUS (css-rc3vw3)
    ============================================================================ */
@@ -799,8 +799,8 @@ div.chakra-menu__group {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50% !important;
-  height: 110px !important;
+  width: 90% !important;
+  height: 100% !important;
   background: var(--color-bg-dark-verylight) !important;
   border-radius: 6px !important;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -815,6 +815,11 @@ div.chakra-menu__group {
   transform: scale(0.75);
 }
 
+/* Skalierung im alternativen Modus */
+:root:has(.css-rc3vw3) .css-1qlemha {
+  transform: scale(1.7);
+  font-weight: bold;
+}
 
 /* ============================================================================
    15. DARK THEME OVERRIDES
