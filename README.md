@@ -2,6 +2,7 @@
 
 # Stylebot skript
 Stylebot.css
+https://pastebin.com/7nX8Rx3i
 
 # Tools for Autodarts Backup
 tfa_settings.txt
