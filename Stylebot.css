@@ -135,13 +135,13 @@ body::before {
 
 /* Hintergrundbild wenn im Spiel */
 :root:has(.css-tkevr6) body::before {
-  background-image: url("https://i.postimg.cc/gzTG6LL8/ingame-retro.png");
+  background-image: url("https://raw.githubusercontent.com/ElKevinio/Autodarts-Config/refs/heads/main/ad/ingame_retro.png");
   filter: blur(0.5px);
 }
 
 /* Hintergrundbild außerhalb des Spiels */
 :root:not(:has(.css-tkevr6)) body::before {
-  background-image: url(https://i.postimg.cc/pRNHbHfh/menu.png);
+  background-image: url(https://raw.githubusercontent.com/ElKevinio/Autodarts-Config/refs/heads/main/ad/menu.png);
   filter: blur(3px);
 }
 
