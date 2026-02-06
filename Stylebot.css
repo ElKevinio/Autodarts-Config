@@ -528,7 +528,7 @@ p.chakra-text.css-0 {
 
 /* Hauptnavigation */
 :root:not(:has(.css-rc3vw3)) .css-ege71s {
-  background: var(--color-bg-dark-verylight) !important;
+  background: var(--color-bg-dark-subtle) !important;
   color: var(--color-text);
 }
 
