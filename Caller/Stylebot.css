@@ -1,0 +1,1133 @@
+/*
+
+  AUTODARTS CUSTOM THEME
+  by ELKEVINIO
+   ============================================================================
+   Dieses Stylesheet passt die Autodarts-Oberfläche mit einem benutzerdefinierten
+   Theme an. Es verwendet CSS-Variablen für einfache Anpassungen und organisiert
+   Styles nach Funktionsbereichen.
+   ============================================================================ */
+
+/* ============================================================================
+   1. CSS-VARIABLEN (THEME-KONFIGURATION)
+   ============================================================================ */
+
+:root {
+  /* --- Farben (auskommentierte Alternativen für rotes Theme) --- */
+  /*--color-bg-main: linear-gradient(135deg, #2b0000, #3b0a0a);*/
+  /*--color-bg-box: linear-gradient(145deg, #4a0f0f, #5c1a1a);*/
+  /*--color-border: #ff6b6b;*/
+  /*--color-border: #ffffff;*/
+  
+  /* --- Aktive Farbwerte --- */
+  --color-text: #ffecec;              /* Haupttextfarbe (helles Rosa) */
+  --color-text-soft: #ffb3b3;         /* Weichere Textfarbe für weniger wichtige Elemente */
+  
+  /* --- Schatten-Effekte --- */
+  /*--color-shadow: 0 0 10px #ff6b6b;*/
+  /*--color-shadow-strong: 0 0 20px #ff6b6b;*/
+  --color-shadow: 0 0 0px #ffffff;    /* Aktuell: kein Schatten */
+  /*--color-shadow-strong: 0 0 20px #ffffff;*/
+  
+  /* --- Schriftart --- */
+  --font-main: 'Montserrat', sans-serif;
+  
+  /* --- Layout-Abstände --- */
+  --spacing-player: 20px;              /* Abstand zwischen Spieler-Boxen */
+  
+  /* --- ZENTRALE GRADIENT-DEFINITIONEN --- */
+  /* Aktive Spieler-Box & Score-Boxen (hohe Intensität) */
+  --color-bg-box: linear-gradient(
+    145deg,
+    rgba(200, 0, 200, 0.99),
+    rgba(0, 200, 200, 0.95)
+  );
+  
+  /* Tournament/Lobby Boxen (mittlere Intensität) */
+  --color-bg-tournament: linear-gradient(
+    145deg,
+    rgba(200, 0, 200, 0.8),
+    rgba(0, 200, 200, 0.7)
+  );
+  
+  /* Buttons (hohe Intensität) */
+  --color-bg-button: linear-gradient(
+    145deg,
+    rgba(200, 0, 200, 0.9),
+    rgba(0, 200, 200, 0.8)
+  );
+  
+  /* Modals (sehr hohe Intensität) */
+  --color-bg-modal: linear-gradient(
+    145deg,
+    rgba(200, 0, 200, 0.95),
+    rgba(0, 200, 200, 0.90)
+  );
+  
+  /* --- STATUS-FARBEN --- */
+  /* Grün für Winner/Gewonnen (dunkler, kräftiger) */
+  --color-winner-green: rgba(34, 139, 34, 1.0);      /* ForestGreen - volle Deckkraft */
+  --color-winner-bg: rgba(34, 139, 34, 0.25);        /* Hintergrund mit Transparenz */
+  
+  /* Rot für Active Player (kräftiger, weniger transparent) */
+  --color-active-red: rgba(220, 38, 38, 1.0);        /* Kräftiges Rot - volle Deckkraft */
+  --color-active-bg: rgba(220, 38, 38, 0.25);        /* Hintergrund mit Transparenz */
+  
+  /* --- BUST/WIN GRADIENT-DEFINITIONEN --- */
+  /* Rot-Gradient für Bust (Fehlwurf) */
+  --color-bg-bust: linear-gradient(
+    145deg,
+    rgba(220, 38, 38, 0.99),
+    rgba(180, 20, 20, 0.95)
+  );
+  
+  /* Grün-Gradient für Win (Gewonnen) */
+  --color-bg-win: linear-gradient(
+    145deg,
+    rgba(34, 139, 34, 0.99),
+    rgba(20, 100, 20, 0.95)
+  );
+  
+  /* --- ZUSÄTZLICHE HINTERGRUND-VARIABLEN --- */
+  /* Schwarze Hintergründe mit variabler Transparenz */
+  --color-bg-dark-full: rgba(0, 0, 0, 1.0);          /* Vollständig undurchsichtig */
+  --color-bg-dark-strong: rgba(0, 0, 0, 0.97);       /* Sehr stark */
+  --color-bg-dark-medium: rgba(0, 0, 0, 0.85);       /* Mittel (Menüs) */
+  --color-bg-dark-light: rgba(0, 0, 0, 0.6);         /* Leicht (Modals) */
+  --color-bg-dark-verylight: rgba(0, 0, 0, 0.5);     /* Sehr leicht (Container) */
+  --color-bg-dark-subtle: rgba(0, 0, 0, 0.3);        /* Subtil (Nested) */
+  --color-bg-dark-minimal: rgba(0, 0, 0, 0.1);       /* Minimal (Overlay) */
+  
+  /* --- Hintergrund für Menüleisten --- */
+  --color-bg-menu: var(--color-bg-dark-medium);      /* Verwendet dark-medium Variable */
+  --color-border-menu: rgba(10, 10, 10, 0.9);        /* Rahmenfarbe für Menüs */
+  
+  /* --- Berechnete Höhen für 3-Reihen-Layout --- */
+  --row-height-3: calc((108% - 180px) / 3 - var(--spacing-player));
+}
+
+
+/* ============================================================================
+   2. HINTERGRUND-BILDER
+   ============================================================================ */
+
+/* Standard-Body-Styling für Hintergrundbild */
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.6s ease;
+}
+
+/* Hintergrundbild unscharf machen */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+/* Hintergrundbild wenn im Spiel */
+:root:has(.css-tkevr6) body::before {
+  background-image: url("https://raw.githubusercontent.com/ElKevinio/Autodarts-Config/refs/heads/main/ad/ingame_retro.png");
+  filter: blur(0.5px);
+}
+
+/* Hintergrundbild außerhalb des Spiels */
+:root:not(:has(.css-tkevr6)) body::before {
+  background-image: url(https://raw.githubusercontent.com/ElKevinio/Autodarts-Config/refs/heads/main/ad/menu.png);
+  filter: blur(3px);
+}
+
+
+/* ============================================================================
+   3. HAUPTCONTAINER & GLOBALE STYLES
+   ============================================================================ */
+
+/* Hauptcontainer für das Spiel */
+:root:not(:has(.css-rc3vw3)) .css-tkevr6 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: var(--color-bg-main);
+  color: var(--color-text);
+  font-family: var(--font-main);
+}
+
+/* Kompakter Bereich */
+:root:not(:has(.css-rc3vw3)) .css-1cdcn26 {
+  margin: 0 auto;
+  transform: scale(0.95);
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+/* Spezielle Textgröße für 180er-Animation */
+.showAnimations .animate180Text {
+  font-size: 5rem !important;
+}
+
+/* Tournament/Lobby Container */
+div.css-1c7nfs0 {
+  background: var(--color-bg-dark-verylight);
+  border-radius: 20px;
+}
+
+/* Lobby Button Container */
+div.css-n3uhkm {
+  background: var(--color-bg-dark-full);
+}
+
+/* Transparent Container */
+.css-1830czf {
+  background: rgba(0, 0, 0, 0);
+  padding: 0px;
+}
+
+/* Match/Stats Containers */
+div.css-1hnru1g,
+div.css-1xpribl {
+  background: var(--color-bg-box);
+  padding: 10px;
+  scale: 0.98;
+  border-radius: 20px;
+}
+
+/* Nested Container in Stats */
+div.css-1xpribl .css-1xpribl {
+  background: var(--color-bg-dark-subtle);
+  padding: 1px;
+  border-radius: 3px;
+}
+
+/* Tournament Boxen */
+div.css-1i4p7r8 .css-1vu3uip,
+div.css-19vjuk,
+div.css-1ds490z,
+div.css-1yva96,
+div.css-1infztd,
+div.css-21ibwm,
+div.css-1fysknj {
+  background: var(--color-bg-tournament);
+  border-radius: 20px;
+}
+
+div.css-1ds490z {
+  padding: 10px;
+}
+
+.css-1yva96 table tr td {
+  padding: 0px 0px !important;
+}
+
+div.css-14mmegq,
+.css-5qr39z .css-0,
+div.css-1pjzkuw {
+  background: var(--color-bg-tournament);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+a.chakra-button.css-z1xk1r { 
+  background: var(--color-bg-button);
+}
+css-rrf7rv
+/* Score und Turn Boxen Hintergrund */
+div.css-156dsds,
+div.css-1v4sen1,
+div.css-7bjx6y .css-1b1zesg,
+div.css-rtn29s {
+  background: var(--color-bg-box);
+  border-radius: 10px;
+}
+
+.css-19lo6pj .css-17xejub{
+  
+  width:10px;
+  min-width: 0px;
+}
+
+div.css-hjw8x4 {
+  background: var(--color-bg-dark-strong);
+  border-radius: 10px;
+}
+
+div.css-1yso2z2 {
+  background: rgba(50, 50, 50, 0.95);
+  border-radius: 3px;
+}
+
+div.css-jpb1ox {
+  background: rgba(100, 100, 100, 0.95);
+  border-radius: 3px;
+}
+
+/* Zweite Spalte in bestimmten Layouts verstecken */
+.css-2ogfm9 .css-e7rvd4:nth-of-type(2) { 
+  display: none;
+}
+
+
+/* ============================================================================
+   4. SPIELER-BOXEN (GENERELLES STYLING)
+   ============================================================================ */
+
+/* Gemeinsame Basis für alle Spieler-Boxen */
+:root:not(:has(.css-rc3vw3)) .css-rtn29s,
+:root:not(:has(.css-rc3vw3)) .css-hjw8x4 {
+  background: var(--color-bg-dark-verylight);
+  color: var(--color-text);
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--color-shadow);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  z-index: 10;
+  position: absolute;
+  width: 375px;
+  height: calc((100% - 180px) / 3);
+}
+
+/* Hover-Effekt für Spieler-Boxen */
+:root:not(:has(.css-rc3vw3)) .css-rtn29s:hover,
+:root:not(:has(.css-rc3vw3)) .css-hjw8x4:hover {
+  box-shadow: var(--color-shadow-strong);
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+/* Aktive Spieler-Box (weißer Rahmen) */
+:root:not(:has(.css-rc3vw3)) .css-rtn29s {
+  background: var(--color-bg-box);
+  border-color: #FFFFFF;
+  border-width: 3px;
+  border-style: solid; 
+}
+
+/* Spielerboxen Breite (allgemein) */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div {
+  position: absolute;
+  width: 350px;
+}
+
+
+/* ============================================================================
+   5. SPIELER-ANZEIGE (CONTENT INNERHALB DER BOXEN)
+   ============================================================================ */
+
+/* Container für Spielerinformationen */
+:root:not(:has(.css-rc3vw3)) .css-y3hfdd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+/* Spielername */
+:root:not(:has(.css-rc3vw3)) .css-elma0c {
+  text-align: center;
+  color: var(--color-border);
+}
+
+/* Zusätzliche Spieler-Info */
+:root:not(:has(.css-rc3vw3)) .css-1j0bqop {
+  order: 1;
+  font-size: 24px;
+  margin-bottom: 0.9rem;
+  text-align: center;
+  color: var(--color-text-soft);
+}
+
+/* Punktestand (großer Text) */
+:root:not(:has(.css-rc3vw3)) .css-1r7jzhg {
+  order: 2;
+  font-size: 120px;
+  text-align: center;
+  color: var(--color-text);
+  text-shadow: 0 0 25px var(--color-shadow);
+}
+
+/* Spielername im Extended Display (Dark Theme Override) */
+:root:not(:has(.css-rc3vw3)) html body.chakra-ui-dark 
+div#root 
+div.css-z42oq0 
+div.css-nfhdnc 
+div.css-tkevr6 
+div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 
+div.ad-ext-player.css-1en42kf 
+div.chakra-stack.css-y3hfdd 
+div.chakra-stack.css-37hv00 
+div.css-aa7b80 
+span.css-elma0c 
+div.chakra-stack.css-1igwmid 
+span.ad-ext-player-name.css-xgedvp 
+p.chakra-text.css-0 {
+  color: #ffffff !important;      /* Weiß */
+  text-shadow: none !important;   /* Kein Glow */
+}
+
+
+/* ============================================================================
+   6. SPIELER-POSITIONIERUNG: 1-2 SPIELER
+   ============================================================================ */
+
+/* 1 Spieler: Einzelne Box links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(1):only-child {
+  top: 90px;
+  left: 30px;
+  height: calc(100% - 180px);
+}
+
+/* 2 Spieler: Erste Box links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(1):nth-last-child(2) {
+  top: 90px;
+  left: 30px;
+  height: calc(100% - 200px);
+}
+
+/* 2 Spieler: Zweite Box rechts */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(2):nth-last-child(1) {
+  top: 90px;
+  right: 30px;
+  height: calc(100% - 200px);
+}
+
+/* Spielername-Position für 1-2 Spieler */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display:has > div:nth-child(2):nth-last-child(1) .css-y3hfdd,
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display:has > div:only-child .css-y3hfdd {
+  position: absolute; 
+  top: 4em;   /* Frei anpassbar */
+}
+
+
+/* ============================================================================
+   7. SPIELER-POSITIONIERUNG: 3-4 SPIELER (ZWEI REIHEN)
+   ============================================================================ */
+
+/* Spieler 1: Oben links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(1):nth-last-child(3),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(1):nth-last-child(4) {
+  top: 90px;
+  left: 30px;
+  height: calc((105% - 180px) / 2 - var(--spacing-player));
+}
+
+/* Spieler 2: Oben rechts */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(2):nth-last-child(2),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(2):nth-last-child(3) {
+  top: 90px;
+  right: 30px;
+  height: calc((105% - 180px) / 2 - var(--spacing-player));
+}
+
+/* Spieler 3: Unten links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(3):nth-last-child(1),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(3):nth-last-child(2) {
+  top: calc(90px + ((100% - 180px) / 2) + var(--spacing-player));
+  left: 30px;
+  height: calc((105% - 180px) / 2 - var(--spacing-player));
+}
+
+/* Spieler 4: Unten rechts */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(4):last-child {
+  top: calc(90px + ((100% - 180px) / 2) + var(--spacing-player));
+  right: 30px;
+  height: calc((105% - 180px) / 2 - var(--spacing-player));
+}
+
+/* Spielername-Position für 3-4 Spieler */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display:has > div:nth-child(3):nth-last-child(2) .css-y3hfdd,
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display:has > div:nth-child(4):last-child .css-y3hfdd {
+  position: absolute; 
+  top: 7em;   /* Frei anpassbar */
+}
+
+
+/* ============================================================================
+   8. SPIELER-POSITIONIERUNG: 5-6 SPIELER (DREI REIHEN)
+   ============================================================================ */
+
+/* --- Reihe 1 (Oben) --- */
+
+/* Spieler 1: Oben links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(1):nth-last-child(5),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(1):nth-last-child(6) {
+  top: 90px;
+  left: 30px;
+  height: var(--row-height-3);
+}
+
+/* Spieler 2: Oben rechts */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(2):nth-last-child(4),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(2):nth-last-child(5) {
+  top: 90px;
+  right: 30px;
+  height: var(--row-height-3);
+}
+
+/* --- Reihe 2 (Mitte) --- */
+
+/* Spieler 3: Mitte links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(3):nth-last-child(3),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(3):nth-last-child(4) {
+  top: calc(90px + ((100% - 180px) / 3) + var(--spacing-player));
+  left: 30px;
+  height: var(--row-height-3);
+}
+
+/* Spieler 4: Mitte rechts */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(4):nth-last-child(2),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(4):nth-last-child(3) {
+  top: calc(90px + ((100% - 180px) / 3) + var(--spacing-player));
+  right: 30px;
+  height: var(--row-height-3);
+}
+
+/* --- Reihe 3 (Unten) --- */
+
+/* Spieler 5: Unten links */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(5):nth-last-child(1),
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(5):nth-last-child(2) {
+  top: calc(90px + 2 * ((100% - 180px) / 3) + 2 * var(--spacing-player));
+  left: 30px;
+  height: var(--row-height-3);
+}
+
+/* Spieler 6: Unten rechts */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display > div:nth-child(6):last-child {
+  top: calc(90px + 2 * ((100% - 180px) / 3) + 2 * var(--spacing-player));
+  right: 30px;
+  height: var(--row-height-3);
+}
+
+/* Spielername-Position für 5-6 Spieler */
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display:has> div:nth-child(5):nth-last-child(1) .css-y3hfdd,
+:root:not(:has(.css-rc3vw3)) #ad-ext-player-display:has> div:nth-child(6):last-child .css-y3hfdd {
+  position: absolute;
+  top: 2em;  /* Frei anpassbar */
+}
+
+
+/* ============================================================================
+   9. NAVIGATION & MENÜLEISTE
+   ============================================================================ */
+
+/* Hauptnavigation */
+:root:not(:has(.css-rc3vw3)) .css-ege71s {
+  background: var(--color-bg-dark-subtle) !important;
+  color: var(--color-text);
+}
+
+/* Menüleiste Gesamtbreite */
+:root:has(.css-rc3vw3) .css-1k7iu8k {
+  width: 100%;
+  max-width: 1700px;
+  position: relative;
+}
+
+/* Menübutton (hoher z-index für Klickbarkeit) */
+.chakra-menu__menu-button.css-10zm3od {
+  position: relative !important;
+  z-index: 2147483647 !important; /* Maximaler z-index */
+  pointer-events: auto !important;
+}
+
+/* Wrapper für Menü */
+.css-7vwrza {
+  position: relative !important;
+  z-index: 2147483646 !important;
+}
+
+/* Chakra Wrap */
+.chakra-wrap { 
+  position: relative !important; 
+  z-index: 2147483645 !important; 
+}
+
+/* Menü-Gruppen */
+div.chakra-menu__group {
+  padding-left: 10px !important;
+  z-index: 2147483644 !important; 
+}
+
+
+/* ============================================================================
+   10. MENÜ-LISTEN & DROPDOWN-STYLING
+   ============================================================================ */
+
+/* Generisches Styling für alle Menü-Listen */
+[id^="menu-list-"] {
+  background: var(--color-bg-menu) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border-menu) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-family: var(--font-main) !important;
+  padding: 0.5rem 0 !important;
+  overflow: hidden !important;
+}
+
+/* Menü-Items (ohne Linien zwischen Items) */
+[id^="menu-list-"] .chakra-menu__menuitem {
+  border: none !important;
+  background: transparent !important;
+  color: var(--color-text) !important;
+  padding: 0.5rem 1rem !important;
+  text-shadow: none !important;
+}
+
+/* Hover-Effekt für Menü-Items */
+[id^="menu-list-"] .chakra-menu__menuitem:hover {
+  background: rgba(255, 255, 255, 0.50) !important;
+  color: var(--color-text) !important;
+}
+
+/* Spezifische Menü-Listen (Legacy-IDs) */
+#menu-list-\:r1\: {
+  background: var(--color-bg-menu) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border-menu);
+  border-radius: 10px;
+  box-shadow: none !important;
+  font-family: var(--font-main);
+  padding: 0.4rem 0;
+}
+
+#menu-list-\:r1\: > * {
+  background: transparent !important;
+  color: var(--color-text) !important;
+}
+
+#menu-list-\:r1\: .chakra-menu__menuitem:hover {
+  background: rgba(255, 255, 255, 0.50) !important;
+  color: var(--color-text) !important;
+}
+
+#menu-list-\:rhj\: {
+  background: var(--color-bg-menu) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border-menu);
+  border-radius: 10px;
+  box-shadow: none !important;
+  font-family: var(--font-main);
+  padding: 0.4rem 0;
+}
+
+#menu-list-\:rhj\: > * {
+  background: transparent !important;
+  color: var(--color-text) !important;
+}
+
+#menu-list-\:rhj\:\hover {
+  background: rgba(255, 107, 107, 0.50) !important;
+}
+
+
+/* ============================================================================
+   11. TURN & SCORE BEREICH
+   ============================================================================ */
+
+/* Turn- und Score-Boxen */
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .css-rrf7rv,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .score.css-156dsds,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .ad-ext-turn-throw.css-1p5spmi {
+  background: var(--color-bg-box);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--color-shadow);
+  text-shadow: 0 0 15px var(--color-shadow);
+  transition: all 0.3s ease;
+  margin-bottom: 0rem;
+  border-radius: 10px;
+}
+
+/* Schriftgrößen für Turn-Bereich */
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .css-rrf7rv { 
+  font-size: 32px; 
+}
+
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .score.css-156dsds,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .ad-ext-turn-throw.css-1p5spmi {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+/* Hover-Effekt für Turn & Score */
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .css-rrf7rv:hover,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .score.css-156dsds:hover,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .ad-ext-turn-throw.css-1p5spmi:hover {
+  box-shadow: var(--color-shadow-strong);
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+
+/* ============================================================================
+   12. SCORING & BULLOUT ANZEIGE
+   ============================================================================ */
+
+/* Gesamtbreite für Scoring und Bullout */
+:root:not(:has(.css-rc3vw3)) .css-1omnor5,
+:root:not(:has(.css-rc3vw3)) .css-ul22ge {
+  width: 900px;  
+}
+
+:root:not(:has(.css-rc3vw3)) .css-19lo6pj {
+  width: 1500px;  
+  transform: translateX(-20%);
+}
+
+/* Höhe für Scoring-Anzeige (Standard-Modus) */
+:root:not(:has(.css-rc3vw3)) .css-1dkgpmk,
+:root:not(:has(.css-rc3vw3)) .css-1wlduvp,
+:root:not(:has(.css-rc3vw3)) .css-sm8wdq,
+:root:not(:has(.css-rc3vw3)) .css-1b26ovh,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .css-rrf7rv,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .score.css-156dsds,
+:root:not(:has(.css-rc3vw3)) #ad-ext-turn .ad-ext-turn-throw.css-1p5spmi {
+  height: 120px; 
+}
+
+/* Höhe für Scoring-Anzeige (Alternativer Modus) */
+:root:has(.css-rc3vw3) .css-1dkgpmk,
+:root:has(.css-rc3vw3) .css-1wlduvp,
+:root:has(.css-rc3vw3) .css-sm8wdq,
+:root:has(.css-rc3vw3) .css-1b26ovh,
+:root:has(.css-rc3vw3) #ad-ext-turn .css-rrf7rv,
+:root:has(.css-rc3vw3) #ad-ext-turn .score.css-156dsds,
+:root:has(.css-rc3vw3) #ad-ext-turn .ad-ext-turn-throw.css-1p5spmi {
+  height: 120px; 
+}
+
+/* Position bei Bust/Win/CheckGuide */
+:root:not(:has(.css-rc3vw3)) .css-1dkgpmk,
+:root:not(:has(.css-rc3vw3)) .css-1wlduvp,
+:root:not(:has(.css-rc3vw3)) .css-sm8wdq,
+:root:not(:has(.css-rc3vw3)) .css-1b26ovh,
+:root:not(:has(.css-rc3vw3)) .css-881tme {
+  position: relative;
+}
+
+/* Position bei Bot/Public Game */
+:root:not(:has(.css-rc3vw3)):root:has(.css-7lnr9n) .css-1emway5 {
+  position: relative;
+  top: -1em;
+}
+
+/* Button-Höhe in Scoring-Bereich */
+.css-19lo6pj button {
+  height: 40px !important;
+}
+
+/* Einheitliche Button-Höhen in der Menüleiste (Fix für unterschiedliche Höhen) */
+.chakra-wrap__list.css-19lo6pj button,
+.chakra-wrap__list.css-19lo6pj a.chakra-button,
+.chakra-wrap__list.css-19lo6pj .chakra-button {
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Spezifischer Fix für Button-Gruppen */
+.css-19lo6pj .chakra-button__group button,
+.css-19lo6pj .css-1ayoy1w button {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+/* Icons in Buttons zentrieren */
+.css-19lo6pj button svg,
+.css-19lo6pj .chakra-button svg {
+  vertical-align: middle !important;
+}
+
+
+/* ============================================================================
+   13. CHALKBOARD (TAFEL-ANZEIGE)
+   ============================================================================ */
+
+/* Chalkboard Position (1vs1) */
+:root:has(.css-1u90hiz) .css-1u90hiz {
+  position: absolute;
+  right: 1.0em;
+  top: 22em;
+  height: 50%;
+  width: 90%;
+}
+
+/* Chalkboard Schriftgröße und Spaltenbreite */
+:root:has(.css-1u90hiz) tbody tr td {
+  font-size: 45px; 
+  width: 50%;
+}
+
+css-hjw8x4
+/* ============================================================================
+   14. ALTERNATIVER MODUS (css-rc3vw3)
+   ============================================================================ */
+
+/* Menüleiste im alternativen Modus */
+:root:has(.css-rc3vw3) .css-1eq3q64 { 
+  height: 70% !important; 
+}
+
+/* Spieler-Score im alternativen Modus */
+:root:has(.css-rc3vw3) #ad-ext-player-display .ad-ext-player-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90% !important;
+  height: 100% !important;
+  background: var(--color-bg-dark-verylight) !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+  color: #fff !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Skalierung im alternativen Modus */
+:root:has(.css-rc3vw3) .css-aa7b80 {
+  transform: scale(0.75);
+}
+
+/* Skalierung im alternativen Modus */
+:root:has(.css-rc3vw3) .css-1qlemha {
+  transform: scale(1.7);
+  font-weight: bold;
+}
+
+/* ============================================================================
+   15. DARK THEME OVERRIDES
+   ============================================================================ */
+
+/* Hauptcontainer im Dark Mode */
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc,
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 {
+  background: transparent;
+}
+
+/* Spieleranzeige im Dark Mode */
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div.css-1cdcn26 {
+  background: transparent;
+}
+
+/* Weitere Dark Theme Overrides */
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf {
+  background: transparent;
+  border: none;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd div.chakra-stack.css-37hv00 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd div.chakra-stack.css-37hv00 div.css-aa7b80 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd div.chakra-stack.css-37hv00 div.css-aa7b80 span.css-elma0c {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd div.chakra-stack.css-37hv00 div.css-aa7b80 span.css-elma0c div.chakra-stack.css-1igwmid {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd div.chakra-stack.css-37hv00 div.css-aa7b80 span.css-elma0c div.chakra-stack.css-1igwmid span.ad-ext-player-name.css-xgedvp {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-player-display.chakra-stack.showAnimations.css-1iy3ld1 div.ad-ext-player.css-1en42kf div.chakra-stack.css-y3hfdd div.chakra-stack.css-37hv00 div.css-aa7b80 span.css-elma0c div.chakra-stack.css-1igwmid span.ad-ext-player-name.css-xgedvp p.chakra-text.css-0 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii span.css-2qqrvr {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii span.css-2qqrvr p.chakra-text.css-0 {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii div.chakra-stack.css-157w68j {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii div.chakra-stack.css-157w68j div.css-881tme.score {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii div.chakra-stack.css-157w68j div.css-881tme.score p.chakra-text.css-cg6hwt.score {
+  background: transparent;
+}
+
+html body.chakra-ui-dark div#root div.css-z42oq0 div.css-nfhdnc div.css-tkevr6 div#ad-ext-turn.chakra-stack.css-1iy3ld1 div.chakra-stack.css-1eq3q64 div.chakra-stack.css-qe7hy6 div.chakra-stack.css-1omkfhw div.chakra-stack.css-1sw6nii div.chakra-stack.css-157w68j button.chakra-button.css-19lo6pj {
+  background: transparent;
+}
+
+
+/* ============================================================================
+   16. MODALS & DIALOGE
+   ============================================================================ */
+
+/* Modal/Dialog transparenter Hintergrund (Friends-Dialog etc.) */
+.chakra-modal__content.css-e5ryzl,
+.chakra-slide.css-e5ryzl,
+div[role="dialog"].chakra-modal__content {
+  background: var(--color-bg-dark-light) !important;
+  border-radius: 20px;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  color: var(--color-text) !important;
+}
+
+/* Player Statistics Modal (Spieler-Statistiken) */
+.chakra-modal__content.css-1dtx81o,
+section.chakra-modal__content.css-1dtx81o[role="dialog"] {
+  background: var(--color-bg-modal) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  color: var(--color-text) !important;
+  border-radius: 15px !important;
+}
+
+/* Match Comparison Modal (Spieler-Vergleich) */
+.chakra-modal__content.css-1xpx961,
+section.chakra-modal__content.css-1xpx961[role="dialog"] {
+  background: var(--color-bg-modal) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  color: var(--color-text) !important;
+  border-radius: 15px !important;
+}
+
+/* Modal Content Container */
+.css-fiws9o {
+  background: transparent !important;
+}
+
+/* Modal Overlay dunkler machen */
+.chakra-modal__overlay {
+  background: var(--color-bg-dark-minimal) !important;
+}
+
+/* Stack-Elemente im Modal transparent */
+.chakra-modal__content .chakra-stack {
+  background: transparent !important;
+}
+
+
+/* ============================================================================
+   17. SPEZIELLE ANPASSUNGEN & FIXES
+   ============================================================================ */
+
+/* Tooltip/Popover-Styling */
+.css-ktd6ms {
+  background: var(--color-bg-menu) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 5px;
+  padding-right: 0px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* Body-Div ohne Layout-Verschiebung */
+body > div:nth-of-type(1) > div > div:nth-of-type(1) {
+  background: var(--color-bg-menu) !important;
+  color: var(--color-text) !important;
+  border-radius: 15px !important;
+  border: 0px solid var(--color-border-menu) !important;
+  padding: 05px !important;
+  padding-right: 10px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+/* Verstecke bestimmte Buttons */
+button.chakra-button.css-11po3d {
+  display: none;
+  scale:0;
+}
+
+
+/* ============================================================================
+   18. STATUS-FARBEN (WINNER/ACTIVE)
+   ============================================================================ */
+
+/* --- LOBBY BUTTONS --- */
+/* Start Game Button (grün) */
+button.chakra-button.css-u7txwc {
+  background: var(--color-winner-green) !important;
+  color: white !important;
+}
+
+/* Delete Lobby Button (rot) */
+button.chakra-button.css-56luid {
+  background: var(--color-active-red) !important;
+  color: white !important;
+}
+
+/* --- WINNER MARKER (Grün - Spieler hat gewonnen) --- */
+/* Winner Badge/Zahl */
+.ad-ext-player-winner .css-5i7dz4,
+.ad-ext-player-winner .css-3fr5p8,
+.ad-ext-player-winner .css-1en42kf {
+  background: var(--color-winner-green) !important;
+  color: white !important;
+}
+
+/* Winner Indikator-Container */
+.ad-ext-player-winner .css-1k3nd6z {
+  background: var(--color-winner-bg) !important;
+  border: 2px solid var(--color-winner-green) !important;
+  border-radius: 8px !important;
+}
+
+/* Winner Border am ganzen Player-Container */
+.ad-ext-player-winner .css-17xejub {
+  border-radius: 12px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  pointer-events: none !important;
+}
+
+/* --- ACTIVE PLAYER MARKER (Rot - Spieler ist am Zug) --- */
+/* Active Badge/Zahl */
+.ad-ext-player-active .css-5i7dz4,
+.ad-ext-player-active .css-3fr5p8 {
+  background: var(--color-active-red) !important;
+  color: white !important;
+}
+
+/* Active Indikator-Container */
+.ad-ext-player-active .css-1k3nd6z {
+  background: var(--color-active-bg) !important;
+  border: 2px solid var(--color-active-red) !important;
+  border-radius: 8px !important;
+}
+
+/* Active Border am ganzen Player-Container */
+.ad-ext-player-active .css-17xejub {
+  border-radius: 12px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  pointer-events: none !important;
+}
+
+
+/* ============================================================================
+   19. TURN-ANZEIGE STATUS-FARBEN (BUST/WIN)
+   ============================================================================ */
+
+/* --- NORMALE TURN-ANZEIGE (Im Spiel) --- */
+/* Normale Dart-Anzeige und Score-Box */
+.ad-ext-turn-throw.css-1p5spmi,
+.css-rtn29s,
+.chakra-text.ad-ext-turn-points.css-rrf7rv {
+  background: var(--color-bg-box) !important;
+}
+
+/* --- BUST ANIMATION (Rot - Fehlwurf) --- */
+/* Bust Dart-Anzeige */
+.ad-ext-turn-throw.css-1wlduvp {
+  background: var(--color-bg-bust) !important;
+  border: 2px solid var(--color-active-red) !important;
+}
+
+/* Bust Animation Container */
+.bustAnimation.css-1cpofu2 {
+  background: rgba(220, 38, 38, 0.8) !important;
+}
+
+/* Bust Score-Anzeige (optional auch rot) */
+.bustAnimation .chakra-text.ad-ext-turn-points.css-rrf7rv {
+  background: var(--color-bg-bust) !important;
+  border: 2px solid var(--color-active-red) !important;
+}
+
+/* --- WIN ANIMATION (Grün - Gewonnen) --- */
+/* Winner Dart-Anzeige */
+.ad-ext-turn-throw.css-sm8wdq {
+  background: var(--color-bg-win) !important;
+  border: 2px solid var(--color-winner-green) !important;
+}
+
+/* Winner Animation Container */
+.winnerAnimation.css-re1vv9 {
+  background: rgba(34, 139, 34, 0.8) !important;
+}
+
+/* Winner Score-Anzeige (optional auch grün) */
+.winnerAnimation .chakra-text.ad-ext-turn-points.css-rrf7rv {
+  background: var(--color-bg-win) !important;
+  border: 2px solid var(--color-winner-green) !important;
+}
+
+
+/* ============================================================================
+   ENDE DES STYLESHEETS
+   ============================================================================ */
